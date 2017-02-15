@@ -24,7 +24,7 @@
 
 #import "ICSDrawerController.h"
 #import "ICSDropShadowView.h"
-#import "ViewController.h"
+//#import "ZYLife_Swift-Swift.h"
 
 static const CGFloat kICSDrawerControllerLeftViewInitialOffset = -60.0f;
 static const NSTimeInterval kICSDrawerControllerAnimationDuration = 0.5;
@@ -76,7 +76,8 @@ typedef NS_ENUM(NSUInteger, ICSDrawerControllerState)
         _leftViewController = leftViewController;
         _centerViewController = centerViewController;
         
-        kICSDrawerControllerDrawerDepth = (kWidth-65*(kWidth/320));
+        CGFloat width = [UIScreen mainScreen].bounds.size.width;
+        kICSDrawerControllerDrawerDepth = (width-65*(width/320));
         
         if ([_leftViewController respondsToSelector:@selector(setDrawer:)]) {
             _leftViewController.drawer = self;
@@ -175,10 +176,8 @@ typedef NS_ENUM(NSUInteger, ICSDrawerControllerState)
     NSParameterAssert(self.panGestureRecognizer);
     
     //针对项目修改
-    ViewController *mainVc = (ViewController *)self.centerViewController;
-    [mainVc.mainBigBtn addGestureRecognizer:self.panGestureRecognizer];
-    
-//    [self.centerView addGestureRecognizer:self.panGestureRecognizer];
+//    ViewController *mainVc = (ViewController *)self.centerViewController;
+//    [mainVc.mainBigBtn addGestureRecognizer:self.panGestureRecognizer];
 }
 
 - (void)removeClosingGestureRecognizers

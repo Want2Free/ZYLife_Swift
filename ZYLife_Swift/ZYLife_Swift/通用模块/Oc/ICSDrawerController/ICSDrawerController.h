@@ -23,7 +23,7 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "ClearNavViewController.h"
+//#import "ClearNavViewController.h"
 
 @protocol ICSDrawerControllerChild;
 @protocol ICSDrawerControllerPresenting;
@@ -62,7 +62,7 @@
     ICSDrawerController *drawer = [[ICSDrawerController alloc] initWithLeftViewController:left
                                                                      centerViewController:center];
  */
-@interface ICSDrawerController : ClearNavViewController
+@interface ICSDrawerController : UIViewController
 
 /**
  @name Child controllers

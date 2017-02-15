@@ -40,23 +40,6 @@ typedef enum {
 @property (nonatomic, copy) NSString *username;
 // 密码
 @property (nonatomic, copy) NSString *password;
-//小区id
-@property (nonatomic,copy) NSString *communityId;
-//小区名称
-@property (nonatomic,copy) NSString *communityName;
-//小区用户-默认字典{loginID:comnunityName}
-@property (nonatomic,strong) NSMutableDictionary *communityDict;
-
-//缓存论坛类别、拍卖类别（针对不同小区）
-//{communityId : types}
-@property (nonatomic,strong) NSArray *bbsTypeAry;
-@property (nonatomic,strong) NSArray *pmTypeAry;
-
-//是否首次使用
-@property (nonatomic) BOOL isFirstUse;
-
-//新消息条数
-@property (nonatomic) NSInteger newMsgCount;
 
 // 组织类型
 @property (nonatomic, assign) OrgType orgType;
@@ -74,6 +57,18 @@ typedef enum {
 
 // 是否保存密码
 @property (nonatomic, assign) BOOL passwordSaved;
+
+//业务
+
+/**
+ 已选小区名称
+ */
+@property (nonatomic,copy) NSString *communityName;
+
+/**
+ 已选小区ID
+ */
+@property (nonatomic,assign) long long communityId;
 
 /* ==================================== 方法 ==================================== */
 
@@ -108,42 +103,6 @@ typedef enum {
 	token过期
  */
 - (void)accessTokenExpires;
-
-- (NSString *)getMyCommunityId;
-
-- (NSString *)getMyCommunityName;
-
-- (NSDictionary *)getCommunityDict;
-
-- (NSArray *)getPmTypeAry;
-
-- (NSArray *)getBbsTypeAry;
-
-- (NSInteger)getNewMsgCount;
-
-/**
- *  当前用户是否有默认小区
- *
- *  @return 是否有选小区
- */
-- (BOOL)isHasCommunityOfCurrentUser;
-
-/**
- *  获取当前用户的小区id
- *
- *  @return 小区id
- */
-- (NSString *)getCommunityIdOfCurrentUser;
-
-//首页类型<1.开门首页 2.红包首页>
-@property (nonatomic,assign) NSInteger operaType;
-
-- (NSInteger)getOperaType;
-
-- (NSInteger)isHasOperaType;
-
-- (void)saveCommunityList:(NSMutableArray*)listArr;
-- (NSMutableArray *)getCommunityList;
 
 @end
 

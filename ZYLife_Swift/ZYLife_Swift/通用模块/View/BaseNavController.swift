@@ -8,11 +8,12 @@
 
 import UIKit
 
-class BaseNavController: UINavigationController {
+class BaseNavController: UINavigationController,UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -21,7 +22,10 @@ class BaseNavController: UINavigationController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        navigationController.setNavigationBarHidden(viewController.isKind(of: ClearNavController.classForCoder()), animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

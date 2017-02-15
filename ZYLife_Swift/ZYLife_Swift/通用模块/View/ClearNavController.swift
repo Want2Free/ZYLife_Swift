@@ -4,7 +4,8 @@
 //
 //  Created by Jason on 16/12/27.
 //  Copyright © 2016年 Jason. All rights reserved.
-//
+
+//  隐藏导航栏
 
 import UIKit
 
@@ -14,6 +15,18 @@ class ClearNavController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

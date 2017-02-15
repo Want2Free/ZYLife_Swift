@@ -57,7 +57,7 @@
         }
         @catch (NSException *e)
         {
-            MyLog(@"Unarchive of %@ failed: %@", dataKey, e);
+            NSLog(@"Unarchive of %@ failed: %@", dataKey, e);
         }
         @finally
         {

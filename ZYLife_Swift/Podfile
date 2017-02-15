@@ -1,0 +1,23 @@
+
+source 'https://git.coding.net/CocoaPods/Specs.git'
+#'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
+use_frameworks!
+
+target 'ZYLife_Swift' do
+    
+    #swift框架
+    
+    
+    #oc框架
+    pod 'AFNetworking'	#网络请求框架
+    pod 'SDWebImage'	#图片异步加载
+    pod 'SVProgressHUD'
+    pod 'MJRefresh'
+    pod 'MJExtension'
+    pod 'RKDropdownAlert' #Alert弹出框架
+    
+end
+
+
+

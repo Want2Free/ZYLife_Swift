@@ -8,8 +8,6 @@
 
 #import "SSOHelper.h"
 #import "UserDefaults.h"
-#import "BSResultInfo.h"
-#import "JSONKit.h"
 
 #define kNotificationBingoLinkAccessTokenUpdate @"kNotificationBingoLinkAccessTokenUpdate"
 
@@ -121,16 +119,6 @@
     
     NSString *requestMedthd = @"POST";
     
-//#if __enableBasicAuth__
-//    requestMedthd = @"GET";
-//    
-//#if DEBUG
-//    //[request addRequestHeader:@"Authorization" value:@"Basic dGFuemhoOjEyMzEyMw=="];
-//#endif
-//#else
-//    requestMedthd = @"POST";
-//#endif
-    
     [request setHTTPMethod:requestMedthd];
     
     // 忽略https证书
@@ -141,10 +129,6 @@
      */
     
     @synchronized(requestArray) {
-        /* 清空之前的请求
-         for (NSMutableURLRequest *req in requestArray) {
-         [req clearDelegatesAndCancel];
-         }*/
         
         [requestArray removeAllObjects];
         [requestArray addObject:request];
@@ -159,7 +143,7 @@
         
         _oauthResultInfo = [[OauthResultInfo alloc] init];
         _oauthResultInfo.success = NO;
-        _oauthResultInfo.errorMessage = kFailMsg;//@"登录失败，请求服务器出错。";
+        _oauthResultInfo.errorMessage = @"登录失败，请求服务器出错。";
     }
     else{
         //取出返回集合
@@ -177,7 +161,7 @@
             [UserDefaults sharedInstance].userId        = username; //手机号
         } else {
             //失败
-            _oauthResultInfo.errorMessage = kLoginFail;
+            _oauthResultInfo.errorMessage = @"登录失败，请求服务器出错。";
         }
     }
     
@@ -237,14 +221,12 @@
     BOOL returnValue = NO;
     
     if (!error) {
-        NSString* responseString = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-        MyLog(@"str : %@", responseString);
-        
-        NSMutableDictionary *jsonDic = [responseString objectFromJSONString];
-        if (responseString == nil || jsonDic == nil) return NO;
+        NSError *error;
+        NSMutableDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:received options:NSJSONReadingAllowFragments error:&error];
+        if (jsonDic == nil) return NO;
         
         if (jsonDic && jsonDic.count == 2) {
-            MyLog(@"刷新token数据 ： %@", jsonDic);
+            NSLog(@"刷新token数据 ： %@", jsonDic);
             if ([[jsonDic objectForKey:@"error"] isEqualToString:@"invalid_grant"]) {
                 // DDLogInfo(@"token刷新失败，refreshToken已经过期，重新登录");
                 
@@ -258,19 +240,18 @@
                     [UserDefaults sharedInstance].loginID 		= _oauthResultInfo.identity;
                     [UserDefaults sharedInstance].eCode 		= _oauthResultInfo.eCode;
                     
-                    MyLog(@"重新登录成功");
+                    NSLog(@"重新登录成功");
                     
                     returnValue = YES;
                 }
                 else{
-                    MyLog(@"重新登录失败");
+                    NSLog(@"重新登录失败");
                     
-                    *errorMsg = resultInfo.errorMessage;
                 }
             }
         }
         else {
-            //DDLogInfo(@"token刷新成功");
+            NSLog(@"token刷新成功");
             // token刷新成功
             
             [UserDefaults sharedInstance].accessToken = [jsonDic objectForKey:@"access_token"];
@@ -281,7 +262,6 @@
         }
     }
     
-    MyLog(@"accessToken: %@",[UserDefaults sharedInstance].accessToken);
     return returnValue;
 }
 

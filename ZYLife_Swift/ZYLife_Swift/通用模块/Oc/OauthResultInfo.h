@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef long long MyLong;
+
 @interface OauthResultInfo : NSObject
 
 
